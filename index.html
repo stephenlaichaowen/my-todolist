@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Todo List</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" href="icon.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="all.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+    integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"
+    integrity="sha256-T/f7Sju1ZfNNfBh7skWn0idlCBcI3RwdLSS4/I7NQKQ=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script defer src="all.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <section class="todo-wrapper">
+      <div class="title">
+        <div>
+          <h1 v-if="day" class="todo-title">
+            <span class="text-lime">{{ today.day }}</span>
+            <span>
+              {{ currentTemp }}°C
+              <i ref="weatherIcon" class="fas"></i>
+            </span> <br>
+            <span class="text-lime">{{ today.date }}</span>
+          </h1>
+          <h1 v-else class="todo-title ">
+            <span class="text-lime">{{ today.day }}</span>
+            <span>
+              {{ currentTemp }}°C
+              <i ref="weatherIcon" class="fas"></i>
+            </span> <br>
+            <span class="text-lime">{{ today.date }}</span>
+          </h1>         
+        </div>
+        <div class="icon ">
+          <i v-if="toggleIcon" class="fas fa-toggle-on fa-2x" @click="displayChinese"></i>
+          <i v-else class="fas fa-toggle-off fa-2x" @click="displayEnglish"></i>
+        </div>
+      </div>
+      <form @keydown.enter.prevent="">
+        <input ref="inputBox" type="text" class="input-todo" :class="{ active: new_todo }"
+          placeholder="Enter your todo item here..." v-model="new_todo" @keyup.enter="addItem">
+        <div class="btn btn-add" :class="{ active: new_todo }" @click="addItem">+</div>
+      </form>
+
+      <div v-if="pending.length > 0">
+        <div class="">
+          <p v-if="message" class="status busy">You have {{ pending.length }} pending item<span
+              v-if="pending.length>1">s</span></p>
+          <p v-else class="status busy">您有 {{ pending.length }} 個代辦事項</p>
+        </div>
+        <transition-group name="todo-item" tag="ul" class="todo-list">
+          <li v-for="(item, index) in pending" v-bind:key="item.title">
+            <input class="todo-checkbox" v-bind:id="'item_' + item.id" v-model="item.done" type="checkbox">
+            <label v-bind:for="'item_' + item.id"></label>
+            <span class="todo-text">{{ item.title }}</span>
+            <span class="delete" @click="deleteItem(item)"></span>
+          </li>
+          </transition>
+      </div>
+
+      <transition name="slide-fade">
+        <p class="status free " v-if="!pending.length">
+          <img src="https://nourabusoud.github.io/vue-todo-list/images/beer_celebration.svg" alt="celebration">
+          <span v-if="doneMessage">Time to chill! You have no todos.</span>
+          <span v-else>恭喜您, 今天的事情都做完了 !</span>
+        </p>
+      </transition>
+
+      <div v-if="completed.length > 0 && showComplete">
+        <div class="">
+          <p v-if="completedStatus" class="status">Completed tasks: {{ completedPercentage }}</p>
+          <p v-else class="status">完成事項: {{ completedPercentage }}</p>
+        </div>
+        <transition-group name="todo-item" tag="ul" class="todo-list archived">
+          <li v-for="(item, index) in completed" v-bind:key="item.title">
+            <input class="todo-checkbox" v-bind:id="'item_' + item.id" v-model="item.done" type="checkbox">
+            <label v-bind:for="'item_' + item.id"></label>
+            <span class="todo-text">{{ item.title }}</span>
+            <span class="delete" @click="deleteItem(item)"></span>
+          </li>
+          </transition>
+      </div>
+      <div class="control-buttons">
+        <div class="btn btn-secondary" v-if="completed.length > 0" @click="toggleShowComplete">
+          <div v-if="todoStatus" class="">
+            <span v-if="!showComplete">Show</span>
+            <span v-else>Hide</span>
+            <span>Complete</span>
+          </div>
+          <div v-else class="">
+            <span v-if="!showComplete">顯示完成事項</span>
+            <span v-else>隱藏完成事項</span>
+          </div>
+        </div>
+        <div class="btn btn-secondary " v-if="todoList.length > 0" @click="clearAll">{{ clearTodo }}</div>
+      </div>
+    </section>
+  </div>
+</body>
+
+</html>
+
+<script>
+  if (navigator.serviceWorker) {
+    navigator.serviceWorker
+      .register('./sw.js')
+      .then(registration => {
+        console.log(registration);
+      })
+      .catch(console.error)
+  }
+</script>
