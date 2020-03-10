@@ -191,7 +191,8 @@ ul.todo-list.archived li{
   /* background: #fff; */
   /* background: yellow; */
   background: #111111;
-  border-bottom: 1px solid yellow;
+  /* border-bottom: 1px solid yellow; */
+  border-bottom: 1px solid #6664ff;
 }
 
 .todo-text{
