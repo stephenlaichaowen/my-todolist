@@ -178,7 +178,9 @@ ul.todo-list li{
   display: block;
   margin: 10px 0;  
   border: none;
-  border-bottom: 1px solid lime;
+  /* background-color: #FFFF7F; */
+  border-bottom: 2px solid lime;
+  color: #119DA4;
   /* border-radius: 3px; */
   padding-left: 38px; /* custom checkbox width + 16 */
   padding-top: 12px;
@@ -190,9 +192,11 @@ ul.todo-list li{
 ul.todo-list.archived li{
   /* background: #fff; */
   /* background: yellow; */
-  background: #111111;
+  /* background: #111111; */
+  /* background-color: #30BCED; */
+  /* background-color: #FAF4D0; */
   /* border-bottom: 1px solid yellow; */
-  border-bottom: 1px solid #6664ff;
+  border-bottom: 2px solid #6664ff;
 }
 
 .todo-text{
