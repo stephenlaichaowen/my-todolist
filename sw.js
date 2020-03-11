@@ -1,5 +1,5 @@
 // SW Version
-const version = '1.3'
+const version = '1.4'
 const cacheName = 'my-todolist'
 
 // Static Cache - App Shell
