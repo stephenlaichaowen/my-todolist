@@ -25,7 +25,7 @@ self.addEventListener('activate', e => {
   // Clean static cache
   let cleaned = caches.keys().then(keys => {
     keys.forEach(key => {
-      if (key !== `${cacheName}-${version}` && key.match(`${static}-`)) {
+      if (key !== `${cacheName}-${version}` && key.match(`${cacheName}-`)) {
         return caches.delete(key)
       }
     })
