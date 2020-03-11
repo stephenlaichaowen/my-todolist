@@ -21,10 +21,11 @@ new Vue({
       completedStatus: true,
       currentTemp: '',
       weatherIcon: '',
-      ajax: true
+      timer: ''
     };
   },
   mounted() {
+    this.startTimer()
     this.todoList = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || []
     axios
       .get(`${api.base}weather?q=taipei&units=metric&APPID=${api.key}`)
@@ -81,6 +82,24 @@ new Vue({
     }
   },
   methods: {   
+    startTimer() {
+      let today = new Date()
+      let h = today.getHours()
+      let m = today.getMinutes()
+      let s = today.getSeconds()
+      // m = this.checkTime(m)
+      // s = this.checkTime(s)
+      // this.$refs.timer.innerHTML = `${h}:${m}:${s}`
+      this.timer = `${h}:${m}:${s}`      
+      setTimeout(this.startTimer, 1000)      
+    },
+    checkTime(t) {
+      // let i
+      if (t < 10) {
+        t = `0{t}`
+        return i
+      }
+    },
     displayChinese() {
       this.toggleIcon = false
       this.message = false
