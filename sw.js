@@ -1,6 +1,6 @@
 // SW Version
-const version = '1.2'
-const cacheName = 'my-todo-list'
+const version = '1.3'
+const cacheName = 'my-todolist'
 
 // Static Cache - App Shell
 const appAssets = [

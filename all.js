@@ -87,19 +87,11 @@ new Vue({
       let h = today.getHours()
       let m = today.getMinutes()
       let s = today.getSeconds()
-      // m = this.checkTime(m)
-      // s = this.checkTime(s)
-      // this.$refs.timer.innerHTML = `${h}:${m}:${s}`
+      if (m < 10) m = `0${m}`
+      if (s < 10) s = `0${s}`
       this.timer = `${h}:${m}:${s}`      
       setTimeout(this.startTimer, 1000)      
-    },
-    checkTime(t) {
-      // let i
-      if (t < 10) {
-        t = `0{t}`
-        return i
-      }
-    },
+    },   
     displayChinese() {
       this.toggleIcon = false
       this.message = false
