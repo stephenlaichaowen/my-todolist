@@ -28,7 +28,8 @@ body{
   align-items: center;
 }
 
-.timer {
+.timer,
+.tday {
   font-size: 0.9rem;
 }
 
